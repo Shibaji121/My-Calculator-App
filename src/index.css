@@ -40,6 +40,10 @@ body {
   color: white;
   font-size: 4rem;
   padding-right: 10px;
+  max-width: -webkit-fill-available;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
 }
 .buttons-container {
   border: 1px solid black;
