@@ -18,9 +18,12 @@ function App() {
   function returnEvaluatedValue(exp) {
     try {
       // eslint-disable-next-line
-      return eval(exp);
+      let evalutedValue = eval(exp);
+      setEvaluated(true);
+      return evalutedValue;
     } catch (error) {
       alert("Oops!! Can't Perform the operation. Please Enter data Correctly");
+      setEvaluated(false);
       return expression;
     }
   }
@@ -30,7 +33,6 @@ function App() {
       let evaluatedValue = returnEvaluatedValue(expression);
       setExpression(evaluatedValue.toString());
       ref.current.scrollLeft = 0;
-      setEvaluated(true);
       return;
     }
     if (value.match(/[0-9]/) && evaluated) {
