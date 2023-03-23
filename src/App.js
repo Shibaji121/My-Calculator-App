@@ -43,7 +43,7 @@ function App() {
     if (value.match(/[0-9]/) && evaluated) {
       setExpression(value);
     } else {
-      if (expression !== "0") {
+      if (expression !== "0" || !value.match(/[0-9]/)) {
         let val = expression;
         val += value;
         setExpression(val);
