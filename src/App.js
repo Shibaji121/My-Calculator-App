@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 
 function App() {
   const [expression, setExpression] = useState("0");
+  const [evaluated, setEvaluated] = useState(false);
   const ref = useRef(null);
 
   function handleKeydown(e) {
@@ -29,15 +30,21 @@ function App() {
       let evaluatedValue = returnEvaluatedValue(expression);
       setExpression(evaluatedValue.toString());
       ref.current.scrollLeft = 0;
+      setEvaluated(true);
       return;
     }
-    if (expression !== "0") {
-      let val = expression;
-      val += value;
-      setExpression(val);
-    } else {
+    if (value.match(/[0-9]/) && evaluated) {
       setExpression(value);
+    } else {
+      if (expression !== "0") {
+        let val = expression;
+        val += value;
+        setExpression(val);
+      } else {
+        setExpression(value);
+      }
     }
+    setEvaluated(false);
     scrollToRight();
   }
 
