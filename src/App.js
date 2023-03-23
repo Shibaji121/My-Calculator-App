@@ -63,12 +63,19 @@ function App() {
             <span style={{ background: "#ffc107" }}></span>
             <span style={{ background: "green" }}></span>
           </div>
+          <div id="equal-sign">{evaluated ? "=" : ""}</div>
           <span id="exp-val" ref={ref}>
             {expression}
           </span>
         </div>
         <div className="buttons-container" onKeyDown={(e) => handleKeydown(e)}>
-          <button className="func-btn" onClick={() => setExpression("0")}>
+          <button
+            className="func-btn"
+            onClick={() => {
+              setExpression("0");
+              setEvaluated(false);
+            }}
+          >
             C
           </button>
           <button className="func-btn">+/-</button>

@@ -45,6 +45,12 @@ body {
   scroll-behavior: smooth;
   white-space: nowrap;
 }
+#equal-sign {
+  font-size: 3rem;
+  color: gray;
+  position: absolute;
+  top: 4rem;
+}
 .buttons-container {
   border: 1px solid black;
   display: grid;
