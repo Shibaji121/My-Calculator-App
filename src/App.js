@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 
 function App() {
-  const [expression, setExpression] = useState("0");
-  const [evaluated, setEvaluated] = useState(false);
-  const ref = useRef(null);
+  const [expression, setExpression] = useState("0"); // State: expression- input string
+  const [evaluated, setEvaluated] = useState(false); // State: evaluated - expression evaluated or not
+  const ref = useRef(null); // get the screen reference to make scroll behaviour
 
+  // function to handle backSpace key press
   function handleKeydown(e) {
     if (e.code === "Backspace" && expression.length === 1) {
       setExpression("0");
@@ -15,6 +16,7 @@ function App() {
     }
   }
 
+  // Function to calculate answer from the input expression
   function returnEvaluatedValue(exp) {
     try {
       // eslint-disable-next-line
@@ -28,13 +30,16 @@ function App() {
     }
   }
 
+  // Main Logic: input and calculate output and and set the states according
   function handleClickingButton(value) {
+    // if equal to clicked
     if (value === "=") {
       let evaluatedValue = returnEvaluatedValue(expression);
       setExpression(evaluatedValue.toString());
       ref.current.scrollLeft = 0;
       return;
     }
+    // If number clicked
     if (value.match(/[0-9]/) && evaluated) {
       setExpression(value);
     } else {
@@ -50,15 +55,19 @@ function App() {
     scrollToRight();
   }
 
+  // Function to scroll right if any big number to enter
   function scrollToRight() {
+    // Used time out to calculate proper scrollwidth
     setTimeout(function () {
       ref.current.scrollLeft = ref.current.scrollWidth;
     }, 100);
   }
 
+  // return the JSX
   return (
     <div className="App">
       <div className="calc-container">
+        {/* Screen block */}
         <div id="screen">
           <div id="nav-btn">
             <span style={{ background: "red" }}></span>
@@ -70,6 +79,7 @@ function App() {
             {expression}
           </span>
         </div>
+        {/* Functional Buttons started from here */}
         <div className="buttons-container" onKeyDown={(e) => handleKeydown(e)}>
           <button
             className="func-btn"
