@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 function App() {
   const [expression, setExpression] = useState("0");
+  const ref = useRef(null);
 
   function handleKeydown(e) {
     if (e.code === "Backspace" && expression.length === 1) {
@@ -13,7 +14,7 @@ function App() {
     }
   }
 
-  function returnedValue(exp) {
+  function returnEvaluatedValue(exp) {
     try {
       // eslint-disable-next-line
       return eval(exp);
@@ -25,9 +26,9 @@ function App() {
 
   function handleClickingButton(value) {
     if (value === "=") {
-      let evaluatedValue = returnedValue(expression);
+      let evaluatedValue = returnEvaluatedValue(expression);
       setExpression(evaluatedValue.toString());
-      scrollToLeft();
+      ref.current.scrollLeft = 0;
       return;
     }
     if (expression !== "0") {
@@ -37,19 +38,13 @@ function App() {
     } else {
       setExpression(value);
     }
-    scrollToRight(10);
+    scrollToRight();
   }
 
-  function scrollToRight(timeOut) {
-    let element = document.getElementById("exp-val");
+  function scrollToRight() {
     setTimeout(function () {
-      element.scrollLeft = element.scrollWidth;
-    }, timeOut);
-  }
-
-  function scrollToLeft() {
-    let element = document.getElementById("exp-val");
-    element.scrollTo(0, -element.scrollWidth);
+      ref.current.scrollLeft = ref.current.scrollWidth;
+    }, 100);
   }
 
   return (
@@ -61,7 +56,9 @@ function App() {
             <span style={{ background: "#ffc107" }}></span>
             <span style={{ background: "green" }}></span>
           </div>
-          <span id="exp-val">{expression}</span>
+          <span id="exp-val" ref={ref}>
+            {expression}
+          </span>
         </div>
         <div className="buttons-container" onKeyDown={(e) => handleKeydown(e)}>
           <button className="func-btn" onClick={() => setExpression("0")}>
